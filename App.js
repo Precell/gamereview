@@ -1,28 +1,42 @@
 import React, { useState } from 'react';
-import {TextInput, StyleSheet, Text, View } from 'react-native';
+import {TextInput, StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
 
 export default function App() {
 
-  const [name, setName] = useState('Precell')
-  const [age, setAge] = useState(53)
+  const [people, setPeople] = useState([
+    {name:'Precell', id:'1'},
+    {name:'Ras Adza', id:'2'},
+    {name:'CoxWayne', id:'3'},
+    {name:'ShingieBuss', id:'4'},
+    {name:'Stingoti', id:'5'},
+    {name:'Blago', id:'6'},
+    {name:'TG', id:'7'},
+    {name:'Tsano', id:'8'},
+  ])
+  
   return (
     <View style={styles.container}>
-      <Text>Enter Name</Text>
-      <TextInput 
-        multiline
-        style={styles.input}
-        placeholder='e.g. John Doe'
-        onChangeText={(val) =>{setName(val)}}/>
+    
+      <FlatList
+        numColumns={2}
+        keyExtractor={(item) => item.id }
+        data={people}
+        renderItem={({ item }) =>(
+          <Text style={styles.item}> {item.name}</Text>
+        )}
+      />
 
-      <Text>Enter age</Text>
-
-      <TextInput
-        keyboardType='numeric'
-        style={styles.input}
-        placeholder='e.g 40'
-        onChangeText={(val) => setAge(val)} />
-        <Text>name :{name}, age: {age}</Text>
-      </View>
+      {/* <ScrollView>
+        {
+          people.map(item => (
+              <View key={item.key}>
+                <Text style={styles.item}>{item.name}</Text>
+              </View>
+            )
+          )
+        }
+      </ScrollView> */}
+    </View>
   );
 }
 
@@ -30,15 +44,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop:40, 
+    paddingHorizontal:20
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
-  input:{
-    borderWidth: 1,
-    borderColor:"#777",
-    padding:8,
-    margin:10,
-    width:200
+  item:{
+    marginTop:30,
+    padding:30,
+    backgroundColor:'pink',
+    fontSize:24,
+    marginHorizontal:10
   }
   }
 );
